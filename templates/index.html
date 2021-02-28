@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlaskBlog</title>
+</head>
+<body>
+   <h1> New York Times Movie Reviews </h1>
+    <div class="container">
+        <form method = "post" action="{{ url_for('process') }}" id = "movie form">
+            <label for="movie_name_box"> Enter a Movie Title:</label>
+            <input type = "text", name = 'movie_name'>
+            <button type="submit" name="submit">Submit</button>
+        </form>
+
+    </div>
+{% if success == True and index_page == False %}
+    <p> Returning results for <b> {{ movie_title }} </b></p>
+<br>
+    <form method = "post" action = "{{ url_for('return_review') }}" id = "select form">
+    <table style="width:100%">
+        <tr>
+        <th> Title </th>
+        <th> Release Date </th>
+        <th> Rating </th>
+        <th> Select </th>
+        </tr>
+        {% for movie in movies['results']  %}
+            <tr>
+                <td>  {{movie['display_title']}} </td>
+                <td> {{movie['opening_date']}} </td>
+                <td> {{movie['mpaa_rating']}} </td>
+                <td>  <button type="button", id = "button_{{ movie['link']['url'] }}"> Get Review Details </button> </td>
+            </tr>
+        {% endfor %}
+    </table>
+    </form>
+{% endif %}
+
+{% if search_again == True and success == False %}
+    <p>We could not find {{ movie_title }} in our catalog, try searching something different!</p>
+{%  endif %}
+</body>
+</html>
