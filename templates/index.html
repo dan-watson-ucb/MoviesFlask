@@ -17,7 +17,7 @@
 {% if success == True and index_page == False %}
     <p> Returning results for <b> {{ movie_title }} </b></p>
 <br>
-    <form method = "post" action = "{{ url_for('return_review') }}" id = "select form">
+    <form action = "{{  url_for('return_review') }}" method = "post">
     <table style="width:100%">
         <tr>
         <th> Title </th>
@@ -27,10 +27,10 @@
         </tr>
         {% for movie in movies['results']  %}
             <tr>
-                <td>  {{movie['display_title']}} </td>
-                <td> {{movie['opening_date']}} </td>
-                <td> {{movie['mpaa_rating']}} </td>
-                <td>  <button type="button", id = "button_{{ movie['link']['url'] }}"> Get Review Details </button> </td>
+                <td>  {{ movie['display_title'] }} </td>
+                <td> {{ movie['opening_date'] }} </td>
+                <td> {{ movie['mpaa_rating'] }} </td>
+                <td> <button name = "name" value = {{ movie['link']['url'] }}> Get Full Review </td>
             </tr>
         {% endfor %}
     </table>

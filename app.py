@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
-    index_page = True
+    print(app.root_path)
     return render_template('index.html')
 
 
@@ -23,14 +23,13 @@ def process():
         search_again = False
     return render_template("index.html", **locals())
 
-@app.route('/results/review/', methods = ['POST'])
-def return_review(movie_title, movies):
 
-    film = movies['results'][movie]
-    film_url = film['link']['url']
-    review_raw = pull_review(film_url)
-
-    review_text = get_review_text(review_raw)
+@app.route('/review/', methods=['GET', 'POST'])
+def return_review():
+    movie_url = request.form.getlist('name')[0]
+    review_data = pull_review(movie_url)
+    review_text = get_review_text(review_data)
+    sentiment, positive, neutral, negative, mixed = get_score(review_text)
     return render_template('review.html', **locals())
 
 
